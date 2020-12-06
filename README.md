@@ -12,7 +12,7 @@ The manuscript of this paper can be accessed at https://arxiv.org/abs/1910.04778
 
 **Structure**
 Below we describe the files in the [TAC folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TAC) folder for your reference.
- - Bayesian Active Contour (BAC) 
+ - Bayesian Active Contour (BAC).
 	 **The full details of BAC method is described both in the paper [Bayesian Active Contours with Affine-Invariant, Elastic Shape Prior](https://ieeexplore.ieee.org/document/6909441) and Section 1 and 2 of [our paper](https://arxiv.org/abs/1910.04778).**
 	 - `curve_to_q.m` The function that converts the coordinates of points sampled from a curve into unit-norm SRVF of curve.
 	 - `DynamicProgrammingQ.c` The function that finds a minimum-cost path used for elastic shape analysis. The original code is by J. D. Tucker based on equation (5.2) in his thesis, the current version is modified by Justin D. Strait and Hengrui Luo.
@@ -43,8 +43,8 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
 	- `ShiftF.m` Shift the curve by a certain amount of unit in parameterization,
 	- `SmoothEnergy.m` Compute the $E_{smooth}$ term in the energy functional used for BAC method.
 	- `SmoothUpdate.m` Compute the needed gradient of $E_{smooth}$ along current contour in order to update the energy functional.
- - Topological Bayesian Active Contour (TAC) 
- ** The full details of TAC method, or combined method is described in [our paper](https://arxiv.org/abs/1910.04778).**
+ - Topological Bayesian Active Contour (TAC).
+	 **The full details of TAC method, or combined method is described in [our paper](https://arxiv.org/abs/1910.04778).**
 	 - `SegDistTop.m` Take the segmentation results and the truth object boundary and calculate a set of performance evaluation measures.
 		 -  `HammingDist.m` Compute the Hamming distance between the truth and segmentation.
 		 -  `HausdorffDist.m` Compute the Hausdorff distance between the truth and segmentation.
