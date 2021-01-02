@@ -32,6 +32,7 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
 	- `ImageUpdate.m` Compute the needed gradient of $E_{energy}$ along current contour in order to update the energy functional.
 	- `InnerProd_Q.m` Compute the inner product of two curves in SRVF form.
 	- `invertGamma.m` Compute the inverse of parameterization function.
+	- `MainScript.m` The script that we use to run all examples in our paper.
 	- `OutwardUnitNormal.m` Compute the outward normal vector to a parameterized curve.
 	- `Parallel_Transport_C.m` Parallel transport a tangent vector along a parameterized curve.
 	- `PriorEnergy.m` Compute the $E_{prior}$ term in the energy functional used for BAC method.
@@ -53,12 +54,11 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
  		 - Gaussian filtering of the original neural cellular image.
 		 - Object selection according to the elastic shape distance.
 	 - `SimScript.m` The script that we use TAC for analyzing the synthetic MPEG-7 datasets.
-	 - `TOPBACSeg.m`   This script is the main script we used for implementation of TAC method, assuming that we already obtained the TOP result for initialization step. We provide following initialization modes:
+	 - `TOPBACSegT.m`  Perform TOP-BAC segmentation with use of training data (e.g., synthetic simulations, skin lesion data). We provide following initialization modes:
 	 1. draw contour initializations by hand (default)
 	 2. import initialization mask from external file and automatically select n_curve contours with the roughest  estimate of area within
 	 3. import initialization mask from external file and cycle through contours until n_curve initializations accepted by user
 	 4. input initialization curve from external file
-	 - `TOPBACSegT.m`  Perform TOP-BAC segmentation with use of training data (e.g., synthetic simulations, skin lesion data).
 	 - `TOPBACSegNT.m`  Perform TOP-BAC segmentation without use of training data (e.g., synthetic simulations, skin lesion data), with an option of pooling the density estimate of objects.
 
 **Abstract**
