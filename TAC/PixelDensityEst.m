@@ -33,8 +33,8 @@ if any(pix_in > 0 & pix_in < 1) || any(pix_out > 0 & pix_out < 1)
     % Kernel density estimator if pixel values are defined between 0 and 1
     eps = 1e-10;    % to ensure density is fully specified over [0,1]
     if ~exist('bandwidth','var') || isempty(bandwidth)
-        p_in = ksdensity(pix_in,linspace(0,1,s),'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
-        p_out = ksdensity(pix_out,linspace(0,1,s),'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
+        [p_in,~,bandwidth] = ksdensity(pix_in,linspace(0,1,s),'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
+        p_out = ksdensity(pix_out,linspace(0,1,s),'Bandwidth',bandwidth,'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
     else
         p_in = ksdensity(pix_in,linspace(0,1,s),'Bandwidth',bandwidth,'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
         p_out = ksdensity(pix_out,linspace(0,1,s),'Bandwidth',bandwidth,'BoundaryCorrection','reflection','Support',[-eps 1+eps]);
