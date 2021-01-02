@@ -142,10 +142,13 @@ if init==1  % Draw contour by hand
     
 elseif init==2  % Import TOP result (as mask) and automatically select first n_curve largest boundary
     % curves by area as initializations.
-    cd('TOP Initializations')
+    cd('../')
+    cd('Manuscript/TOPInitializations')
     seg_mask = imread(arginit);
     clear arginit
     cd('../')
+    cd('../')
+    cd('TAC')
     [boundary,~,K] = bwboundaries(seg_mask(:,:,1)); % K = number of objects detected in image
 
     % Truncate boundary cell to first K objects and compute area contained
@@ -163,10 +166,13 @@ elseif init==2  % Import TOP result (as mask) and automatically select first n_c
     end
     
 elseif init==3 % Import TOP result (as mask) and cycle through boundary curves until n_curves are selected.
-    cd('TOP Initializations')
+    cd('../')
+    cd('Manuscript/TOPInitializations')
     seg_mask = imread(arginit);
     clear arginit
     cd('../')
+    cd('../')
+    cd('D_TAC')
     [boundary,~,K] = bwboundaries(seg_mask(:,:,1)); % K = number of objects detected in image
     
     % Truncate boundary cell to first K objects and compute area contained

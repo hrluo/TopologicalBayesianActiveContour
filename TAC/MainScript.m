@@ -4,12 +4,13 @@
 
 %% Paths - start in D_home folder
 % Replace D_home with your home path
-D_home = '/Users/jdstrait/OneDrive - University of Georgia/Research/TOPBAC/COMPARE/REVISION/updated_code';
-D_donut = 'Data/Donut';
-D_lesion = 'Data/Lesion';
-D_neuron = 'Data/Neuron';
-D_bone = 'Data/Bone';
-D_results = 'Results';
+D_home = '/Users/jdstrait/OneDrive - University of Georgia/Research/TopologicalBayesianActiveContour/';
+D_TAC = 'TAC';
+D_donut = 'Manuscript/Data/Donut';
+D_lesion = 'Manuscript/Data/Lesion';
+D_neuron = 'Manuscript/Data/Neuron';
+D_bone = 'Manuscript/Data/Bone';
+D_results = 'Manuscript/Results';
 
 %% Simulated examples
 % Donut example with Gaussian blur - Figures 2, 3
@@ -23,6 +24,7 @@ init_TOPI{2} = 'donutblur_1_5_3.ppm';
 init_TOPI{3} = 'donutblur_1_5_5.ppm';
 init_TOPI{4} = 'donutblur_1_5_7.ppm';
 
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testIb,trainIb,train_beta,2,2,init_TOPI{1},0.15,0.3,0,[],1000,[],[],0.05);
 [seg{2},totE{2},interior{2},tmr{2}] = TOPBACSegT(testIb,trainIb,train_beta,2,2,init_TOPI{2},0.15,0.3,0,[],1000,[],[],0.05);
 [seg{3},totE{3},interior{3},tmr{3}] = TOPBACSegT(testIb,trainIb,train_beta,2,2,init_TOPI{3},0.15,0.3,0,[],1000,[],[],0.05);
@@ -50,6 +52,7 @@ for i=1:12
     [HauD{i},JD{i},HamD{i},PM{i},ESD{i}] = SegDistTop(interior{i},gtI,seg{i},test_beta);
     i
 end
+cd(D_home)
 
 cd(D_results)
 save('Donut.mat','testIb','trainIb','testI','trainI','test_beta','train_beta','seg','totE','interior','tmr','HauD','JD','HamD','PM','ESD','init_TOPI')
@@ -62,7 +65,11 @@ cd(D_lesion)
 load BenignNevus1.mat
 cd(D_home)
 init_TOPI1 = 'ISIC_0000424_boundaries.ppm.bmp';
+
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testI,trainI,trainbeta,2,2,init_TOPI1,0.3,0.3,0,[],[],[],[],0.05);
+cd(D_home)
+
 cd(D_results)
 save('BenignNevus1.mat','testI','seg','totE','interior','tmr')
 clearvars -except D_home D_lesion D_results
@@ -73,7 +80,11 @@ cd(D_lesion)
 load BenignNevus2.mat
 cd(D_home)
 init_TOPI2 = 'ISIC_0000351_boundaries.ppm.bmp';
+
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testI,trainI,trainbeta,2,2,init_TOPI2,0.3,0.3,0,[],[],[],[],0.05);
+cd(D_home)
+
 cd(D_results)
 save('BenignNevus2.mat','testI','seg','totE','interior','tmr')
 clearvars -except D_home D_lesion D_results
@@ -84,8 +95,12 @@ cd(D_lesion)
 load Melanoma.mat
 cd(D_home)
 init_TOPI3 = 'ISIC_0000150_boundaries.ppm.bmp';
+
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testI,trainI,trainbeta,3,2,init_TOPI3,[0.4,0.1,0.1],0.3,0,[],1000,[],[],0.05);
 [seg{2},totE{2},interior{2},tmr{2}] = TOPBACSegT(testI,trainI,trainbeta,3,2,init_TOPI3,[0.4,0.1,0.1],0.3,0,[],1000,[],[],0.30);
+cd(D_home)
+
 cd(D_results)
 save('Melanoma.mat','testI','seg','totE','interior','tmr')
 clearvars -except D_home D_lesion D_results
@@ -96,8 +111,12 @@ cd(D_lesion)
 load BenignNevus3.mat
 cd(D_home)
 init_TOPI4 = 'ISIC_0000476_boundaries.ppm.bmp';
+
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testI,trainI,trainbeta,2,2,init_TOPI4,0.3,0.3,0,[],1000,[],[],0.05);
 [seg{2},totE{2},interior{2},tmr{2}] = TOPBACSegT(testI,trainI,trainbeta,2,2,init_TOPI4,0.3,0.3,0,[],1000,[],[],0.35);
+cd(D_home)
+
 cd(D_results)
 save('BenignNevus3.mat','testI','seg','totE','interior','tmr')
 clearvars -except D_home D_lesion D_results
@@ -114,10 +133,15 @@ cd(D_home)
 % estimates with respect to each TOP initialized contour separately
 n_curves = size(init_TOPIc,3);
 lambda1 = [0.20*ones(1,25),0.10*ones(1,(n_curves-26+1))];
+
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegNT(I,init_TOPIc,0.1,0.7,0,600,1e-8,0.30,1,0);
 [seg{2},totE{2},interior{2},tmr{2}] = TOPBACSegNT(I,init_TOPIc,0.1,0.7,0,300,1e-8,0.05,1,0);
 [seg{3},totE{3},interior{3},tmr{3}] = TOPBACSegNT(I,init_TOPIc,lambda1,0.7,0,1000,1e-8,0.30,1,0);
 [seg{4},totE{4},interior{4},tmr{4}] = TOPBACSegNT(I,init_TOPIc,lambda1,0.7,0,1000,1e-8,0.05,1,0);
+cd(D_home)
+
+cd(D_neuron)
 save('NeuronSeg.mat','I','init_TOPIc','TOPI','seg','totE','interior','tmr')
 cd(D_home)
 
@@ -133,6 +157,7 @@ init_TOPIp = 'TOPIp.ppm';
 
 % Comparison of no noise, contour perturbation, Gaussian blur
 % TOP+BAC
+cd(D_TAC)
 [seg{1},totE{1},interior{1},tmr{1}] = TOPBACSegT(testI,trainI,train_beta,1,2,init_TOPI,0.3,0.3,0);
 [seg{2},totE{2},interior{2},tmr{2}] = TOPBACSegT(testIp,trainIp,train_betap,1,2,init_TOPIp,0.3,0.3,0);
 [seg{3},totE{3},interior{3},tmr{3}] = TOPBACSegT(testIb,trainIb,train_beta,1,2,init_TOPIb,0.3,0.3,0,[],[],[],[],0.03);
@@ -173,6 +198,7 @@ end
 % Demonstrate use of prior
 [seg{10},totE{10},interior{10},tmr{10}] = TOPBACSegT(testIsp,trainIsp,train_beta,1,4,init_user{1},0.3,0.3,0.05,[],[],[],q_bar);
 [seg{11},totE{11},interior{11},tmr{11}] = TOPBACSegT(testIp,trainIp,train_betap,1,4,init_user{1},0.3,0.3,0.05,[],[],[],qp_bar);
+cd(D_home)
 
 cd(D_results)
 save('Bone.mat')
