@@ -32,7 +32,7 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
 	- `ImageUpdate.m` Compute the needed gradient of $E_{energy}$ along current contour in order to update the energy functional.
 	- `InnerProd_Q.m` Compute the inner product of two curves in SRVF form.
 	- `invertGamma.m` Compute the inverse of parameterization function.
-	- `MainScript.m` The script that we use to run all examples in our paper.
+	- `MainScript.m` The script that we use to run all examples in our paper. The data, results, and TOP initializations called and run in this are found in the `Manuscripts` folder off the main path of the repository.
 	- `OutwardUnitNormal.m` Compute the outward normal vector to a parameterized curve.
 	- `Parallel_Transport_C.m` Parallel transport a tangent vector along a parameterized curve.
 	- `PriorEnergy.m` Compute the $E_{prior}$ term in the energy functional used for BAC method.
