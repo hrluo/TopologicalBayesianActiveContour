@@ -7,8 +7,8 @@
 This is the code repository for the research publication "Combining Geometric and Topological Information in Image Segmentation" by [Justin D. Strait](https://jdstrait.weebly.com/) and [Hengrui Luo](https://hrluo.github.io/). 
 The manuscript of this paper can be accessed at https://arxiv.org/abs/1910.04778. 
 
- - The TOP code we store in [TOP folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TOP) folder for comparison convenience is associated with the paper [A Topological Approach to Hierarchical Segmentation using Mean Shift](https://people.csail.mit.edu/sparis/)  and Section 1 and 2 of [our paper](https://arxiv.org/abs/1910.04778). The copyright of this code belongs to the original author.
- - The TAC code we store in [TAC folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TAC) folder stores the code for both BAC (Bayesian Active Contour) and TAC (Combined method) described in details in [our paper](https://arxiv.org/abs/1910.04778). The copyright of this code belongs to [Justin D. Strait](https://jdstrait.weebly.com/) and [Hengrui Luo](https://hrluo.github.io/). 
+ - The TOP code we store in the [TOP folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TOP) folder for comparison convenience is associated with the paper [A Topological Approach to Hierarchical Segmentation using Mean Shift](https://people.csail.mit.edu/sparis/)  and Section 1 and 2 of [our paper](https://arxiv.org/abs/1910.04778). The copyright of this code belongs to the original author.
+ - The TAC code we store in the [TAC folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TAC) folder stores the code for both BAC (Bayesian Active Contour) and TAC (Combined method) described in details in [our paper](https://arxiv.org/abs/1910.04778). The copyright of this code belongs to [Justin D. Strait](https://jdstrait.weebly.com/) and [Hengrui Luo](https://hrluo.github.io/). 
 
 **Structure**
 Below we describe the files in the [TAC folder](https://github.com/hrluo/TopologicalBayesianActiveContour/tree/master/TAC) folder for your reference.
@@ -17,18 +17,18 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
 	 - `curve_to_q.m` The function that converts the coordinates of points sampled from a curve into unit-norm SRVF of curve.
 	 - `DynamicProgrammingQ.c` The function that finds a minimum-cost path used for elastic shape analysis. The original code is by J. D. Tucker based on equation (5.2) in his thesis, the current version is modified by Justin D. Strait and Hengrui Luo.
 	 - `ElasticShooting.m` The function that computes the SRVF of resulting curve after shooting a vector v on tangent space at a direction q1.
-	 - `ElasticShootingVector.m` The function that computes the geodesic distance (after optimal re-prameterizatoin and rotation) between two curves represented in the  SRVF form and the optimal re-parameterization and rotation between them.
- 		 - `Find_Rotation_and_Seed_unique.m`   The function that computes the optimal reparameterizatoin between two curves (after optimally rotated) represented in the  SRVF form assuming the starting points of these two curves are fixed. 
-			 - `Find_Best_Rotation.m`  The function that computes the optimal rotation between two curves represented in the  SRVF form assuming the starting points of these two curves are fixed.
-	- `FindElasticMean.m` Compute the the mean shape $\bar{q}$ on shape space (and its SRVF form). 
+	 - `ElasticShootingVector.m` The function that computes the geodesic distance (after optimal re-parameterization and rotation) between two curves represented in the SRVF form and the optimal re-parameterization and rotation between them.
+ 		 - `Find_Rotation_and_Seed_unique.m`   The function that computes the optimal re-parameterization between two curves (after optimally rotated) represented in the SRVF form. This does not assume the starting points of the two curves are fixed, and finds the optimal starting point of the second curve to match the first curve.
+			 - `Find_Best_Rotation.m`  The function that computes the optimal rotation between two curves represented in the SRVF form, assuming the starting points of these two curves are fixed.
+	- `FindElasticMean.m` Compute the elastic mean shape $\bar{q}$ on shape space (and its SRVF form). 
 	- `FindElasticCovariance.m` Compute the covariance matrix on the tangent space (to the shape space) at the mean shape $\bar{q}$.
-	- `Form_Basis_Normal_A.m` Find an orthonormal basis of vectors for the normal space of a curve (in SRVF), with respect to inner product
+	- `Form_Basis_Normal_A.m` Find an orthonormal basis of vectors for the normal space of a curve (in SRVF), with respect to inner product.
 	- `Gram_Schmidt.m` Find an orthonormal basis constructed via Gram-Schmidt on a given space. 
-	- `Group_Action_by_Gamma_Coord.m` Apply reparameterization to a curve in its own parameterization.
-	- `Group_Action_by_Gamma_Coord_Q.m`  Apply reparameterization to a curve in its SRVF parameterization.
+	- `Group_Action_by_Gamma_Coord.m` Apply re-parameterization to a curve in its own parameterization.
+	- `Group_Action_by_Gamma_Coord_Q.m`  Apply re-parameterization to a curve in its SRVF parameterization.
 	- `ImageEnergy.m` Compute the $E_{energy}$ term in the energy functional used for BAC method.
-		- `PixelDensityEst.m` Estimate the  density of interior  and exterior pixel values of an image.
-		- `TrainingPixelDensity.m`   Estimate the  density of interior  and exterior pixel values of training images.
+		- `PixelDensityEst.m` Estimate the  density of interior and exterior pixel values of an image (if training images are not available).
+		- `TrainingPixelDensity.m`   Estimate the  density of interior and exterior pixel values of training images.
 	- `ImageUpdate.m` Compute the needed gradient of $E_{energy}$ along current contour in order to update the energy functional.
 	- `InnerProd_Q.m` Compute the inner product of two curves in SRVF form.
 	- `invertGamma.m` Compute the inverse of parameterization function.
@@ -59,7 +59,7 @@ Below we describe the files in the [TAC folder](https://github.com/hrluo/Topolog
 	 2. import initialization mask from external file and automatically select n_curve contours with the roughest  estimate of area within
 	 3. import initialization mask from external file and cycle through contours until n_curve initializations accepted by user
 	 4. input initialization curve from external file
-	 - `TOPBACSegNT.m`  Perform TOP-BAC segmentation without use of training data (e.g., synthetic simulations, skin lesion data), with an option of pooling the density estimate of objects.
+	 - `TOPBACSegNT.m`  Perform TOP-BAC segmentation without use of training data (e.g., neuron data), with an option of pooling the density estimate of objects.
 
 **Abstract**
 A fundamental problem in computer vision is boundary estimation, where the goal is to delineate the boundary of objects in an image.  In this paper, we propose a method which jointly incorporates geometric and topological information within an image to simultaneously estimate boundaries for objects within images with more complex topologies. This method uses a topological method to assist with initializing the active contour algorithm, a method which combines pixel clustering, boundary smoothness, and potential prior shape information to produce an estimated object boundary. Active contour methods are known to be extremely sensitive to algorithm initialization, relying on the user to provide a reasonable starting curve to the algorithm. In the presence of images featuring objects with complex topological structures, such as objects with holes or multiple objects, the user must initialize separate curves for each boundary of interest.  We propose the use of a topological method to provide an automatic initialization in such settings. Our proposed topologically-aware method can produce a smart initialization, freeing up the user from potential pitfalls associated with objects of complex topological structure. We provide a detailed simulation study comparing our initialization to the one obtained from other standard segmentation algorithms. The method is demonstrated on artificially-constructed image datasets from computer vision, as well as applications to skin lesion and neural cellular images, for which multiple topological features can be identified.
