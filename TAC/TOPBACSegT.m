@@ -1,4 +1,4 @@
-function [seg,totE,interior,tmr] = TOPBACSegT(testI,trainI,trainbeta,n_curves,init,arginit,lambda1,lambda2,lambda3,figs,N_iter,tau,q_bar,bandwidth,sm_init)
+function [seg,totE,interior,tmr,initc] = TOPBACSegT(testI,trainI,trainbeta,n_curves,init,arginit,lambda1,lambda2,lambda3,figs,N_iter,tau,q_bar,bandwidth,sm_init)
 %% Perform TOP-BAC segmentation with use of training data
 % (e.g., simulations, skin lesion data)
 
@@ -22,7 +22,7 @@ function [seg,totE,interior,tmr] = TOPBACSegT(testI,trainI,trainbeta,n_curves,in
 %   4 = input initialization curve as 2 x N x n_curves matrix (useful for
 %   comparing different settings)
 % arginit = file name (for init=2,3); 2 x N x n_curves matrix of initial
-% contours (for init=6)
+% contours (for init=4)
 % lambda1, lambda2, lambda3 = update constants, either specified as
 % n_curve-dim. vector if different constants for each contour desired, or
 % as 1 value for each if same constant to be used for all contours, for
@@ -63,7 +63,6 @@ if ~exist('N_iter','var') || isempty(N_iter), N_iter = 300; end
 if ~exist('tau','var') || isempty(tau), tau = 1e-7; end
 if ~exist('bandwidth','var') || isempty(bandwidth), bandwidth = []; end
 if ~exist('sm_init','var') || isempty(sm_init), sm_init = 0; end
-if ~exist('pool','var') || isempty(pool), pool = 0; end
 
 % If only one value specified for lambda1, lambda2, lambda3, then create
 % vectors of size n_curves with repeated values
@@ -148,7 +147,7 @@ elseif init==2  % Import TOP result (as mask) and automatically select first n_c
     clear arginit
     cd('../')
     [boundary,~,K] = bwboundaries(seg_mask(:,:,1)); % K = number of objects detected in image
-    
+
     % Truncate boundary cell to first K objects and compute area contained
     % within each boundary, sorting from largest to smallest
     new_boundary = boundary(1:K);
@@ -270,7 +269,7 @@ end
 
 % Density estimators of pixel values interior and exterior to ground truth
 for i=1:n_train_curves
-    [p_in{i},p_out{i},llik{i}] = TrainingPixelDensity(trainI,trainbeta(:,:,:,i),M,bandwidth);
+    [p_in{i},p_out{i},llik{i},bandwidth] = TrainingPixelDensity(trainI,trainbeta(:,:,:,i),M,bandwidth);
     nlp_in{i} = -log(p_in{i});    % negative log likelihood for interior pixel values
     nlp_out{i} = -log(p_out{i});  % negative log likelihood for exterior pixel values
     

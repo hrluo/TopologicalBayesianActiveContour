@@ -137,7 +137,7 @@ for i=1:n_curves
 end
 
 %% Update segmentation and iterate (separate BAC for each curve)
-for j=1:n_curves
+for j=35:-1:1
     % Only call from cells once to speed up computation
     tmp_init = init{j};
     tmp = tmp_init;
@@ -178,7 +178,7 @@ for j=1:n_curves
         tmp_Esmooth(i) = SmoothEnergy(tmp);
         tmp_totE(i) = tmp_Eimg(i)+tmp_Esmooth(i);
         tmp_smooth = smooth(tmp_totE);
-        sc = sum(diff(tmp_smooth(max(1,i-5):i))>0);
+        sc = sum(diff(tmp_smooth(max(1,i-4):i))>0);
         % used to stop algorithm if smoothed energy increasing for 5
         % successive iterations
         
